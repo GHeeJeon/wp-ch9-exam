@@ -1,9 +1,21 @@
 package moo;
 
 import java.sql.*;
-import java.util.HashMap;
 
 public class DB {
+	
+	private static DB instance = null;
+	
+	private DB() {}
+	
+	public static DB getInstance() {
+		if (instance == null) {
+			instance = new DB();
+		}
+		
+		return instance;
+	}
+
 	
 	private Connection currentConnection = null;
 	
