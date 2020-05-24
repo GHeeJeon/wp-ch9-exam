@@ -5,12 +5,13 @@
 <%@ page import="moo.util.Parameter" %>
 <%@ page import="moo.entity.Quiz" %>
 <%@ page import="java.util.*" %>
+<%@ page import="moo.presentation.QuizRenderer" %>
     
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <% Map<String, String> params = Parameter.extract(request); %>
 <% List<Quiz> quizzes = QuizRepository.getInstance().retrieveQuizzesFromUserAnswer(params); %>
-<% int score = Marker.getScore(params); %>
+<% int score = Marker.getScore(quizzes); %>
     
 <!DOCTYPE html>
 <html>
@@ -57,12 +58,30 @@
 			<a href="index.jsp">메인으로 돌아가기</a>
 		</div>
 		
+		<div>
+			<h2>틀린 문제 보기와 정답</h2>
+		</div>
+		
+		<!--  quiz reviews -->
+		<div>
+			<table style="width: 100%">
+				<colgroup>
+					<col width="10%" />
+					<col width="90%" />
+				</colgroup>
+			
+				<tbody>
+					<% new QuizRenderer(out).renderQuizReviews(quizzes); %>
+				</tbody>
+			</table>
+		</div>
+			
 	</body>
-	
 	
 	<style>
 		table, th, td {
  			border: 1px solid black;
 		}
 	</style>
+	
 </html>

@@ -7,9 +7,7 @@ import moo.entity.Quiz;
 import moo.data.QuizRepository;
 
 public class Marker {
-	public static int getScore(Map<String, String> params) throws SQLException, UnsupportedEncodingException {
-		List<Quiz> quizzes = QuizRepository.getInstance().retrieveQuizzesFromUserAnswer(params);
-		
+	public static int getScore(List<Quiz> quizzes) throws SQLException, UnsupportedEncodingException {		
 		int total = 0;
 		
         for (Quiz q : quizzes) {
