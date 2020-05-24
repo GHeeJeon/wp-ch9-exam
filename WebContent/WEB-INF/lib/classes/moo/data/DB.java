@@ -53,8 +53,8 @@ public class DB {
 		}
 		
 		String driver="oracle.jdbc.driver.OracleDriver"; 
-		// TODO change port to localhost:1521:orcl
-		String url="jdbc:oracle:thin:@localhost:49161:xe";
+		// for test localhost:49161:xe
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
 		
 		try {
 			Class.forName(driver);
