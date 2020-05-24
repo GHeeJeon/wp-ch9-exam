@@ -68,7 +68,7 @@ public class QuizRenderer {
 		writer.println("		<p style=\"margin-top:0pt; margin-bottom:0pt; font-size:12pt\">");
 		
 		// Hidden input to fix value
-		writer.println("			<input name=\"" + q.num + "\" type=\"radio\" value=\"-1\" style=\"display: none\" checked=\"checked\">");
+		writer.println("			<input name=\"" + q.num + "\" type=\"radio\" value=\"답을 선택하지 않음\" style=\"display: none\" checked=\"checked\">");
 		
 		writer.println("			<input name=\"" + q.num + "\" type=\"radio\" value=\"" + q.ex1 + "\">");
 		writer.println(				maker.makeSample(q.ex1));
