@@ -36,8 +36,6 @@ public class QuizRepository {
 			quiz.ex3 = rawQuizzes.getString(exampleIndices.get(2));
 			quiz.ex4 = rawQuizzes.getString(exampleIndices.get(3));
 			quiz.answer = rawQuizzes.getString(9);
-
-			System.out.println(quiz.answer);
 			
 			results.add(quiz);
 		}
@@ -81,4 +79,32 @@ public class QuizRepository {
 		
 		return exampleIndices;
 	}
+
+	public List<Quiz> retrieveQuizzesFromUserAnswer(Map<String, String> params) throws SQLException {
+		List<Quiz> all = getAllQuizzes();
+		ArrayList<Quiz> result = new ArrayList<Quiz>();
+		
+        for(Map.Entry<String, String> elem : params.entrySet() ){
+        	if (!elem.getKey().matches("^[+-]?\\d+$")) {
+        		continue;
+        	}
+        	
+        	int quizNumber = Integer.parseInt(elem.getKey());
+        	String userAnswer = elem.getValue();
+
+			Quiz quiz = all.stream()
+					.filter((q) -> quizNumber == q.num)
+					.findFirst()
+					.orElse(null);
+			
+			if (quiz != null) {
+				quiz.userAnswer = userAnswer;
+				
+				result.add(quiz);
+			}
+		}
+		
+		return result;
+	}
+
 }

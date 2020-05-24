@@ -8,32 +8,32 @@ import moo.data.QuizRepository;
 
 public class Marker {
 	public static int getScore(Map<String, String> params) throws SQLException, UnsupportedEncodingException {
-		List<Quiz> quizzes = QuizRepository.getInstance().getAllQuizzes();
+		List<Quiz> quizzes = QuizRepository.getInstance().retrieveQuizzesFromUserAnswer(params);
 		
 		int total = 0;
 		
-        for(Map.Entry<String, String> elem : params.entrySet() ){
-        	if (!elem.getKey().matches("^[+-]?\\d+$")) {
-        		continue;
+        for (Quiz q : quizzes) {
+        	if (markSingle(q)) {
+        		total++;
         	}
-        	
-        	int quizNumber = Integer.parseInt(elem.getKey());
-        	String userAnswer = elem.getValue();
-
-			Quiz quiz = quizzes.stream()
-					.filter((q) -> quizNumber == q.num)
-					.findFirst()
-					.orElse(null);
-			
-			if (quiz != null && userAnswer != null && markSingle(quiz, userAnswer)) {
-				total++;
-			}        
-		}
+        }
 		
 		return total;
 	}
 	
-	private static boolean markSingle(Quiz q, String userAnswer) {
-		return userAnswer.trim().equals(q.answer.trim());
+	private static boolean markSingle(Quiz q) {
+		if (q == null) {
+			return false;
+		}
+		
+		if (q.answer == null) {
+			return false;
+		}
+		
+		if (q.userAnswer == null) {
+			return false;
+		}
+		
+		return q.answer.trim().equals(q.userAnswer.trim());
 	}
 }

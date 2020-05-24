@@ -77,6 +77,10 @@ public class QuizRenderer {
 		writer.println("</tr>");
 	}
 	
+	public void renderQuizReviews(List<Quiz> quizzes ) {
+		
+	}
+	
 	public interface ExampleMaker {
 		public String makeSample(String text);
 	}

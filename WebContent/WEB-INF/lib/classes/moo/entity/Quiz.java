@@ -10,4 +10,6 @@ public class Quiz {
 	public String ex3;
 	public String ex4;
 	public String answer;
+	
+	public String userAnswer;
 }
