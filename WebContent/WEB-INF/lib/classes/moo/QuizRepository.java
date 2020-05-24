@@ -19,9 +19,10 @@ public class QuizRepository {
 
 	public List<Quiz> getRandom5Quizzes() throws SQLException {
 		ResultSet rawQuizzes = DB.getInstance().query("SELECT * FROM (SELECT * from QUIZ ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM <= 5");
+		
 		List<Quiz> results = new ArrayList<Quiz>();
 		
-		while (rawQuizzes.next()) {
+		while (rawQuizzes.next()) {			
 			Quiz quiz = new Quiz();
 			
 			List<Integer> exampleIndices = getShuffledExampleIndices();
@@ -37,7 +38,7 @@ public class QuizRepository {
 			
 			results.add(quiz);
 		}
-		
+
 		return results;
 	}
 	

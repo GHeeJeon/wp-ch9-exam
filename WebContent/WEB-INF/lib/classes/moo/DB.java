@@ -22,6 +22,7 @@ public class DB {
 	public ResultSet query(String statement, Object... args) {
 		Connection connection = getConnection();
 		if (connection == null) {
+			System.out.println("query: no connection!");
 			return null;
 		}
 		
@@ -37,7 +38,7 @@ public class DB {
 		
 		try {
 			ResultSet result = preparedStatement.executeQuery();
-			
+
 			return result;
 			
 		} catch (SQLException e) {
