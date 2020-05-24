@@ -2,6 +2,7 @@
     <wb-module deploy-name="Ch9_Exam">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/WebContent/WEB-INF/lib/classes"/>
         <property name="context-root" value="Ch9_Exam"/>
         <property name="java-output-path" value="/Ch9_Exam/build/classes"/>
     </wb-module>
