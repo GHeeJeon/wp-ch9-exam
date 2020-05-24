@@ -28,7 +28,8 @@ public class ScoreRepository {
 			score.hakbun = rawScores.getString(1);
 			score.name = rawScores.getString(2);
 			score.grade = rawScores.getString(3);
-
+			score.indate = rawScores.getString(4);
+			
 			results.add(score);
 		}
 		
@@ -37,7 +38,7 @@ public class ScoreRepository {
 	
 	public void addScore(Score score) {
 		DB.getInstance().query(
-				"INSERT INTO SCORE(S_HAKBUN, S_NAME, S_GRADE, S_INDATE) VALUES(?, ?, ?, NULL)",
+				"INSERT INTO SCORE(S_NUM, S_NAME, S_GRADE) VALUES(?, ?, ?)",
 				score.hakbun,
 				score.name,
 				score.grade

@@ -2,16 +2,36 @@
     pageEncoding="UTF-8"%>
 <%@ page import="moo.domain.Marker" %>
 <%@ page import="moo.data.QuizRepository" %>
+<%@ page import="moo.data.ScoreRepository" %>
 <%@ page import="moo.util.Parameter" %>
 <%@ page import="moo.entity.Quiz" %>
+<%@ page import="moo.entity.Score" %>
 <%@ page import="java.util.*" %>
 <%@ page import="moo.presentation.QuizRenderer" %>
     
 <% request.setCharacterEncoding("UTF-8"); %>
 
+<% String hakbun = request.getParameter("hakbun"); %>
+<% String name = request.getParameter("name"); %>
+<% boolean isValid = (hakbun != null && !hakbun.isEmpty()) && (name != null && !name.isEmpty()); %>
+
 <% Map<String, String> params = Parameter.extract(request); %>
 <% List<Quiz> quizzes = QuizRepository.getInstance().retrieveQuizzesFromUserAnswer(params); %>
 <% int score = Marker.getScore(quizzes); %>
+
+<% 
+	if (isValid) {
+		Score newScore = new Score();
+		
+		newScore.hakbun = hakbun;
+		newScore.name = name;
+		newScore.grade = String.valueOf(score);
+		
+		ScoreRepository.getInstance().addScore(newScore);
+	} else {
+		out.println("<script>alert('학번과 이름이 올바르지 않습니다! 하지만 결과는 보여드리죠 ');</script>");
+	}
+%>
     
 <!DOCTYPE html>
 <html>
@@ -54,6 +74,7 @@
 			
 		</table>
 		
+		<!-- go to main -->
 		<div>
 			<a href="index.jsp">메인으로 돌아가기</a>
 		</div>
