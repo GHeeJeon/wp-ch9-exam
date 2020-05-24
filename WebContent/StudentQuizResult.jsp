@@ -15,21 +15,29 @@
 <% String name = request.getParameter("name"); %>
 <% boolean isValid = (hakbun != null && !hakbun.isEmpty()) && (name != null && !name.isEmpty()); %>
 
+
+<% List<Score> scores = ScoreRepository.getInstance().getScores(); %>
+<% boolean isDuplicated = scores.stream().filter((score) -> score.hakbun.equals(hakbun)).findFirst().orElse(null) != null; %>
+
 <% Map<String, String> params = Parameter.extract(request); %>
 <% List<Quiz> quizzes = QuizRepository.getInstance().retrieveQuizzesFromUserAnswer(params); %>
 <% int score = Marker.getScore(quizzes); %>
 
 <% 
 	if (isValid) {
-		Score newScore = new Score();
-		
-		newScore.hakbun = hakbun;
-		newScore.name = name;
-		newScore.grade = String.valueOf(score);
-		
-		ScoreRepository.getInstance().addScore(newScore);
+		if (isDuplicated) {
+			out.println("<script>alert('이미 응시하셨습니다!'); location.href='StudentMain.jsp';</script>");
+		} else {
+			Score newScore = new Score();
+			
+			newScore.hakbun = hakbun;
+			newScore.name = name;
+			newScore.grade = String.valueOf(score);
+			
+			ScoreRepository.getInstance().addScore(newScore);
+		}
 	} else {
-		out.println("<script>alert('학번과 이름이 올바르지 않습니다! 하지만 결과는 보여드리죠 ');</script>");
+		out.println("<script>alert('학번과 이름이 올바르지 않습니다! 하지만 결과는 보여드리죠');</script>");
 	}
 %>
     
