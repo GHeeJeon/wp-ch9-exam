@@ -1,12 +1,13 @@
 package moo.presentation;
 
 import java.io.*;
+
 import java.util.*;
 import javax.servlet.jsp.JspWriter;
 import java.sql.SQLException;
 
 import moo.entity.Quiz;
-import moo.QuizRepository;
+import moo.data.QuizRepository;
 
 public class QuizRenderer {
 	private JspWriter writer = null;
@@ -17,44 +18,29 @@ public class QuizRenderer {
 	
 	public void renderQuizzes() throws SQLException, IOException {
 		List<Quiz> quizzes = QuizRepository.getInstance().getRandom5Quizzes();
-		
-		System.out.println("renderQuizzes: got quizzes");
-		
-		for (Quiz q : quizzes) {
-			printQuiz(q);
+				
+		for (int i = 0; i < quizzes.size(); i++) {	
+			int quizDisplayNumber = i + 1; /* starting from 1 */
+			
+			printQuiz(quizzes.get(i), quizDisplayNumber);
 		}
 		
 	}
 	
-	private void printQuiz(Quiz q) throws IOException {
+	private void printQuiz(Quiz q, int quizDisplayNumber) throws IOException {
 		if ("IT".equals(q.type)) {
-			printQuestion(q);
-
-			printExample(q, new ExampleMaker() {
-				public String makeSample(String text) {
-					return "<span>" + text + "</span>";
-				}
-			});
+			printQuestion(q, quizDisplayNumber);
+			printExample(q, (text) -> "<span>" + text + "</span>");
 		}
 		
 		else if ("TI".equals(q.type)) {
-			printQuestion(q);
-
-			printExample(q, new ExampleMaker() {
-				public String makeSample(String text) {
-					return "<image src=\"image/" + text + "\">";
-				}
-			});
+			printQuestion(q, quizDisplayNumber);
+			printExample(q, (text) -> "<image src=\"image/" + text + "\">");
 		}
 		
 		else if ("TT".equals(q.type)) {
-			printQuestion(q);
-			
-			printExample(q, new ExampleMaker() {
-				public String makeSample(String text) {
-					return "<span>" + text + "</span>";
-				}
-			});
+			printQuestion(q, quizDisplayNumber);
+			printExample(q, (text) -> "<span>" + text + "</span>");
 		}
 		
 		else {
@@ -62,10 +48,10 @@ public class QuizRenderer {
 		}
 	}
 	
-	private void printQuestion(Quiz q) throws IOException {
+	private void printQuestion(Quiz q, int quizDisplayNumber) throws IOException {
 		writer.println("<tr>");
 		writer.println("	<td>");
-		writer.println("		<p style=\"font-weight: bold\">문제 " + q.num + "</p>");
+		writer.println("		<p style=\"font-weight: bold\">문제 " + quizDisplayNumber + "</p>");
 		writer.println("	</td>");
 		writer.println("	<td>");
 		writer.println("		<p>" + q.question + "</p>");

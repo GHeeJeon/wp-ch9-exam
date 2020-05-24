@@ -1,4 +1,4 @@
-package moo;
+package moo.data;
 
 import java.sql.*;
 import java.util.*;
@@ -35,7 +35,34 @@ public class QuizRepository {
 			quiz.ex2 = rawQuizzes.getString(exampleIndices.get(1));
 			quiz.ex3 = rawQuizzes.getString(exampleIndices.get(2));
 			quiz.ex4 = rawQuizzes.getString(exampleIndices.get(3));
+			quiz.answer = rawQuizzes.getString(9);
+
+			System.out.println(quiz.answer);
 			
+			results.add(quiz);
+		}
+
+		return results;
+	}
+	
+	public List<Quiz> getAllQuizzes() throws SQLException {
+		ResultSet rawQuizzes = DB.getInstance().query("SELECT * FROM QUIZ");
+		
+		List<Quiz> results = new ArrayList<Quiz>();
+		
+		while (rawQuizzes.next()) {			
+			Quiz quiz = new Quiz();
+						
+			quiz.num = rawQuizzes.getInt(1);
+			quiz.question = rawQuizzes.getString(2);
+			quiz.type = rawQuizzes.getString(3);
+			quiz.image = rawQuizzes.getString(4);
+			quiz.ex1 = rawQuizzes.getString(5);
+			quiz.ex2 = rawQuizzes.getString(6);
+			quiz.ex3 = rawQuizzes.getString(7);
+			quiz.ex4 = rawQuizzes.getString(8);
+			quiz.answer = rawQuizzes.getString(9);
+
 			results.add(quiz);
 		}
 

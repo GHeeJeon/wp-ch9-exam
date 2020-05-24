@@ -1,4 +1,4 @@
-package moo;
+package moo.data;
 
 import java.sql.*;
 import java.util.*;

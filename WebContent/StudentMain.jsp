@@ -55,9 +55,6 @@
 			<button class="submit-button" type="submit">제출</button>
 			
 		</form>
-
-
-
 	
 		<script>
 			const updateTimeLabel = function(timeLeft) { 
@@ -65,6 +62,8 @@
 			}
 			
 			const whenTimerIsDone = function() {
+				alert('주어진 시간을 모두 사용하여 자동으로 제출됩니다.');
+				
 				document.getElementById('main_form').submit();
 			};
 			
